@@ -34,7 +34,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     #Editable makes it no show in admin interface
     id=models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False)
     email = models.EmailField(unique=True)
-    name=models.CharField(max_length=255,blank=True,null=True)
+    name=models.CharField(max_length=255,default="oussema")
     avatar=models.ImageField(upload_to='uploads/avatars')
     is_active=models.BooleanField(default=True)
     is_superuser=models.BooleanField(default=False)
@@ -47,3 +47,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD='email'
     EMAIL_FIELD='email'
     REQUIRED_FIELD=['name',]
+
+def avatar_url(self):
+        if self.avatar:
+            return f'{settings.WEBSITE_URL}{self.avatar.url}'
+        else:
+             return ''
