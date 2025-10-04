@@ -7,13 +7,13 @@ from django.db import models
 # Create your models here.
 
 class CustomUserManager(UserManager):
-    def _create_user(self,name,email,passord,**extra_fields):
+    def _create_user(self,name,email,password,**extra_fields):
         if not email:
             raise ValueError("you have not specified a valid e-mail")
         email=self.normalize_email(email)
         user=self.model(email=email,name=name,**extra_fields)
-        user.set_password(passord)
-        user.save(using=self.db)
+        user.set_password(password)
+        user.save(using=self._db)
 
         return user
     
@@ -34,7 +34,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     #Editable makes it no show in admin interface
     id=models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False)
     email = models.EmailField(unique=True)
-    name=models.CharField(max_length=255,default="oussema")
+    name=models.CharField(max_length=255)
     avatar=models.ImageField(upload_to='uploads/avatars')
     is_active=models.BooleanField(default=True)
     is_superuser=models.BooleanField(default=False)
@@ -46,10 +46,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects=CustomUserManager()
     USERNAME_FIELD='email'
     EMAIL_FIELD='email'
-    REQUIRED_FIELD=['name',]
+    REQUIRED_FIELDS=['name']
 
 def avatar_url(self):
         if self.avatar:
             return f'{settings.WEBSITE_URL}{self.avatar.url}'
         else:
              return ''
+        
