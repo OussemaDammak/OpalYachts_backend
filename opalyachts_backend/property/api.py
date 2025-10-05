@@ -14,6 +14,14 @@ from .serializers import PropertiesListSerializer,PropertiesDetailSerializer, Re
 @permission_classes([])
 def properties_list(request):
     properties=Property.objects.all()
+
+    #filter per landlord
+    landlord_id = request.GET.get('landlord_id', '')
+    if landlord_id:
+        properties=properties.filter(host=landlord_id)
+
+    #
+
     serializer = PropertiesListSerializer(properties, many=True)
 
     return JsonResponse({
