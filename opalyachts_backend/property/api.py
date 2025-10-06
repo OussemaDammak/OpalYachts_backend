@@ -3,16 +3,29 @@
 from django.http import JsonResponse
 
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
-
+from rest_framework_simplejwt.tokens import AccessToken
 from .forms import PropertyForm
 from .models import Property, Reservation
 from .serializers import PropertiesListSerializer,PropertiesDetailSerializer, ReservationsListSerializer
-
+from useraccount.models import User
 
 @api_view(['GET'])
 @authentication_classes([])
 @permission_classes([])
 def properties_list(request):
+    #auth
+    try:
+        token=request.META['HTTP_AUTHORIZATION'].split('Bearer ')[1]
+        token = AccessToken(token)
+        user_id=token.payload['user_id']
+        user=User.objects.get(pk=user_id)
+    except Exception as e:
+        user=None
+        
+    
+    #
+
+    favorites=[]
     properties=Property.objects.all()
 
     #filter per landlord
@@ -20,12 +33,20 @@ def properties_list(request):
     if landlord_id:
         properties=properties.filter(host=landlord_id)
 
-    #
+    #Favorites
 
+    if user:
+        for property in properties:
+            if user in property.favoritess.all():
+                favorites.append(property.id)
+    
+
+    #
     serializer = PropertiesListSerializer(properties, many=True)
 
     return JsonResponse({
-        'data':serializer.data
+        'data':serializer.data,
+        'favorites': favorites
     })
 
 @api_view(['GET'])
@@ -87,3 +108,19 @@ def book_property(request, pk):
     except Exception as e:
         print('error', e)
         return JsonResponse({'success':False})
+
+
+@api_view(['POST'])
+def toggle_favorite(request,pk):
+    try:
+        prop = Property.objects.get(pk=pk)
+    except Property.DoesNotExist:
+        return JsonResponse({'error': 'Property not found'}, status=404)
+
+    user = request.user
+    if user in prop.favoritess.all():   # ✅ use the correct field name
+        prop.favoritess.remove(user)
+        return JsonResponse({'is_favorite': False})
+    else:
+        prop.favoritess.add(user)
+        return JsonResponse({'is_favorite': True})

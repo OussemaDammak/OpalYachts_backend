@@ -45,7 +45,14 @@ REST_FRAMEWORK={
     ),
     'DEFAULT_PERMISSION_CLASSES':(
         'rest_framework.permissions.IsAuthenticated',
-    )
+    ),
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.FormParser',
+        'rest_framework.parsers.MultiPartParser',
+    ]
+
+
 }
 
 CORS_ALLOWED_ORIGINS=[
@@ -176,3 +183,6 @@ MEDIA_ROOT=BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+REST_AUTH_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'users.serializers.CustomRegisterSerializer',
+}
