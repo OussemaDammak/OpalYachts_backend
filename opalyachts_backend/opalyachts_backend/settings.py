@@ -91,6 +91,7 @@ INSTALLED_APPS = [
     #allow data from frontend
     'corsheaders',
     #apps
+    'chat',
     'useraccount',
     'property',
 ]
