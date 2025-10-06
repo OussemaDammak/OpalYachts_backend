@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 
 from .models import Conversation
 from .serializers import ConversationListSerializer, ConversationDetailSerializer, ConversationMessage , ConversationMessageSerialiezer
-
+from useraccount.models import User
 
 @api_view(['GET'])
 def conversations_list(request):
@@ -23,3 +23,18 @@ def conversations_detail(request,pk):
         'messages': messages_serializer.data
 
     }, safe=False)
+
+#start a new conversation with the landlord
+@api_view(['GET'])
+def conversations_start(request, user_id):
+    conversations= Conversation.objects.filter(users__in=[user_id]).filter(users__in=[request.user.id])
+
+    if conversations.count()>0:
+        conversation= conversations.first()
+        return JsonResponse({'success': True, 'conversation_id': conversation.id})
+    else:
+        user = User.objects.get(pk=user_id)
+        conversation = Conversation.objects.create()
+        conversation.users.add(request.user)
+        conversation.users.add(user)
+        return JsonResponse({'success': True, 'conversation_id': conversation.id})
