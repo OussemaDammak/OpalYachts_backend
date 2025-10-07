@@ -60,7 +60,7 @@ def properties_list(request):
     
     if checkin_date and checkout_date:
         exact_matches= Reservation.objects.filter(start_date=checkin_date) | Reservation.objects.filter(end_date=checkout_date)
-        overlap_matches= Reservation.objects.filter(start_date__lte=checkout_date, end_date___gte=checkin_date)
+        overlap_matches= Reservation.objects.filter(start_date__lte=checkout_date, end_date__gte=checkin_date)
         all_matches = []
 
         for reservation in exact_matches | overlap_matches:
