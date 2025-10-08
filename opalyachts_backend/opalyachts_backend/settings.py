@@ -1,6 +1,8 @@
 import os
 from datetime import timedelta
 from pathlib import Path
+import dj_database_url
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -10,12 +12,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
-
+SECRET_KEY = os.environ.get(
+    "SECRET_KEY",
+    "django-insecure-local-secret-key-for-dev"
+)
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get("DEBUG",default=0))
+DEBUG = bool(os.environ.get("DEBUG",'False') == 'True')
 
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL='useraccount.User'
 #it makes it possible to login(site_id)
@@ -101,12 +105,24 @@ INSTALLED_APPS = [
     'chat',
     'useraccount',
     'property',
-
+    # deployment
 
 ]
 
+#deployment 
+INSTALLED_APPS += ['cloudinary', 'cloudinary_storage']
+
+CLOUDINARY_STORAGE = {
+'CLOUD_NAME': 'your_cloud_name',
+'API_KEY': 'your_api_key',
+'API_SECRET': 'your_api_secret',
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -114,6 +130,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'opalyachts_backend.urls'
@@ -141,14 +158,10 @@ ASGI_APPLICATION = 'opalyachts_backend.asgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': os.environ.get("SQL_ENGINE"),
-        'NAME':os.environ.get("SQL_DATABASE"),
-        'USER':os.environ.get("SQL_USER"),
-        'PASSWORD':os.environ.get("SQL_PASSWORD"),
-        'HOST':os.environ.get("SQL_HOST"),
-        'PORT':os.environ.get("SQL_PORT"),
-    }
+'default': dj_database_url.config(
+    default='sqlite:///db.sqlite3',
+    conn_max_age=600, 
+    ssl_require=True)
 }
 
 
@@ -187,6 +200,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
 MEDIA_URL='/media/'
 MEDIA_ROOT=BASE_DIR / 'media'
 # Default primary key field type
