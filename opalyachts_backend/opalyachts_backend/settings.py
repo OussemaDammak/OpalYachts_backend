@@ -168,9 +168,13 @@ ASGI_APPLICATION = 'opalyachts_backend.asgi.application'
 
 DATABASES = {
 'default': dj_database_url.config(
-    default='sqlite:///db.sqlite3',
-    conn_max_age=600, 
-    ssl_require=True)
+    default=os.environ.get(
+            "DATABASE_URL",
+            "postgresql://neondb_owner:npg_LnbxB7oSs8pQ@ep-muddy-boat-agqvuuwc-pooler.c-2.eu-central-1.aws.neon.tech/opalyachts"
+        ),
+        conn_max_age=600,
+        ssl_require=True
+)
 }
 
 
