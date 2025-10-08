@@ -11,7 +11,7 @@ class CustomRegisterSerializer(RegisterSerializer):
     def get_cleaned_data(self):
         data = super().get_cleaned_data()
         data['name'] = self.validated_data.get('name', '')
-        data['username'] = self.validated_data.get('username', f"user_{uuid.uuid4().hex[:8]}")
+        data['username'] = self.validated_data.get('username', data['name'])
         return data
 
     def save(self, request):
@@ -19,8 +19,8 @@ class CustomRegisterSerializer(RegisterSerializer):
         user = super().save(request)
         # Update the 'name' field (if not already set)
         user.name = self.validated_data.get('name', '')
-        if not user.username:
-            user.username = f"user_{uuid.uuid4().hex[:8]}"
+        user.username = self.validated_data.get('username', user.name)
+
         user.save()
         return user
     
