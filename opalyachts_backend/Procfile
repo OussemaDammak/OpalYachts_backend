@@ -1,1 +1,1 @@
-web: gunicorn opalyachts_backend.opalyachts_backend.wsgi:application --chdir opalyachts_backend
+web: gunicorn opalyachts_backend.wsgi:application --chdir opalyachts_backend/opalyachts_backend
