@@ -25,6 +25,12 @@ CSRF_TRUSTED_ORIGINS = [
     "https://opalyachts-backend.onrender.com", 
 ]
 
+# allauth settings / Render
+ACCOUNT_EMAIL_VERIFICATION = "none"  
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = True
+
+
 AUTH_USER_MODEL='useraccount.User'
 #it makes it possible to login(site_id)
 SITE_ID=1
