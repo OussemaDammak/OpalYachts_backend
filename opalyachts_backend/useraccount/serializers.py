@@ -2,17 +2,16 @@ from rest_framework import serializers
 
 from .models import User
 from dj_rest_auth.registration.serializers import RegisterSerializer
-
+import uuid
 
 
 class CustomRegisterSerializer(RegisterSerializer):
     name = serializers.CharField(required=True)
-    username = None
 
     def get_cleaned_data(self):
         data = super().get_cleaned_data()
         data['name'] = self.validated_data.get('name', '')
-        data['username'] = ''
+        data['username'] = self.validated_data.get('username', f"user_{uuid.uuid4().hex[:8]}")
         return data
 
     def save(self, request):
@@ -20,6 +19,8 @@ class CustomRegisterSerializer(RegisterSerializer):
         user = super().save(request)
         # Update the 'name' field (if not already set)
         user.name = self.validated_data.get('name', '')
+        if not user.username:
+            user.username = f"user_{uuid.uuid4().hex[:8]}"
         user.save()
         return user
     
