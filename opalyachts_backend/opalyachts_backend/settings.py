@@ -21,6 +21,10 @@ DEBUG = bool(os.environ.get("DEBUG",'False') == 'True')
 
 ALLOWED_HOSTS = ['*']
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://opalyachts-backend.onrender.com", 
+]
+
 AUTH_USER_MODEL='useraccount.User'
 #it makes it possible to login(site_id)
 SITE_ID=1
@@ -97,7 +101,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    
+
     'dj_rest_auth',
     'dj_rest_auth.registration',
     #allow data from frontend
