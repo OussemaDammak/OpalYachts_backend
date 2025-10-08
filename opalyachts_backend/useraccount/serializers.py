@@ -6,9 +6,11 @@ import uuid
 
 
 class CustomRegisterSerializer(RegisterSerializer):
+    username = None
     name = serializers.CharField(required=True)
 
     def get_cleaned_data(self):
+        
         data = super().get_cleaned_data()
         data['name'] = self.validated_data.get('name', '')
         return data
