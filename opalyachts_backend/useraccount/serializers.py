@@ -7,10 +7,12 @@ from dj_rest_auth.registration.serializers import RegisterSerializer
 
 class CustomRegisterSerializer(RegisterSerializer):
     name = serializers.CharField(required=True)
+    username = None
 
     def get_cleaned_data(self):
         data = super().get_cleaned_data()
         data['name'] = self.validated_data.get('name', '')
+        data['username'] = ''
         return data
 
     def save(self, request):
