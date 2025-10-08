@@ -3,6 +3,7 @@ from django.conf import settings
 from django.db import models
 
 from useraccount.models import User
+from cloudinary.models import CloudinaryField
 
 # Create your models here.
 
@@ -20,7 +21,7 @@ class Property(models.Model):
     #favorite
     favoritess = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='favorites_properties',blank=True)
     ##
-    image=models.ImageField(upload_to='uploads/properties')
+    image=models.CloudinaryField()
     host=models.ForeignKey(User,related_name='properties',on_delete=models.CASCADE)
     created_at=models.DateTimeField(auto_now_add=True)
 
