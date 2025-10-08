@@ -1,1 +1,1 @@
-web: gunicorn opalyachts_backend.wsgi
+web: gunicorn opalyachts_backend.opalyachts_backend.wsgi:application
