@@ -21,7 +21,7 @@ class Property(models.Model):
     #favorite
     favoritess = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='favorites_properties',blank=True)
     ##
-    image=models.CloudinaryField()
+    image=CloudinaryField('image')
     host=models.ForeignKey(User,related_name='properties',on_delete=models.CASCADE)
     created_at=models.DateTimeField(auto_now_add=True)
 
