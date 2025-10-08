@@ -24,9 +24,13 @@ class Property(models.Model):
     image=CloudinaryField('image')
     host=models.ForeignKey(User,related_name='properties',on_delete=models.CASCADE)
     created_at=models.DateTimeField(auto_now_add=True)
-
+    
     def image_url(self):
-        return f'{settings.WEBSITE_URL}{self.image.url}'
+        url = str(self.image.url)
+        if url.startswith('http'):
+            return url  # Cloudinary (already full URL)
+        return f'{settings.WEBSITE_URL}{url}'
+
     
 class Reservation(models.Model):
     id=models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False)
