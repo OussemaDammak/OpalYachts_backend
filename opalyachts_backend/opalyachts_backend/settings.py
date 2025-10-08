@@ -121,19 +121,13 @@ INSTALLED_APPS = [
     'useraccount',
     'property',
     # storing images
-    'cloudinary',
-    'cloudinary_storage',
 
 ]
 
 #deployment 
 INSTALLED_APPS += ['cloudinary', 'cloudinary_storage']
 
-CLOUDINARY_STORAGE = {
-'CLOUD_NAME': 'your_cloud_name',
-'API_KEY': 'your_api_key',
-'API_SECRET': 'your_api_secret',
-}
+
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
