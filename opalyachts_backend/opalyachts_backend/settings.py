@@ -96,7 +96,8 @@ INSTALLED_APPS = [
     #for auth between django and rest
     'allauth',
     'allauth.account',
-
+    'allauth.socialaccount',
+    
     'dj_rest_auth',
     'dj_rest_auth.registration',
     #allow data from frontend
