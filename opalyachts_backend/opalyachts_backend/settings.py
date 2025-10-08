@@ -24,6 +24,9 @@ ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = [
     "https://opalyachts-backend.onrender.com", 
 ]
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
 
 # allauth settings / Render
 ACCOUNT_EMAIL_VERIFICATION = "none"  
@@ -34,7 +37,7 @@ AUTH_USER_MODEL='useraccount.User'
 #it makes it possible to login(site_id)
 SITE_ID=1
 
-WEBSITE_URL='http://localhost:8000'
+WEBSITE_URL='https://opalyachts-backend.onrender.com'
 
 CHANNEL_LAYERS= {
     'default': {
@@ -76,6 +79,7 @@ REST_FRAMEWORK={
 CORS_ALLOWED_ORIGINS=[
     'http://127.0.0.1:8000',
     'http://127.0.0.1:3000',
+    'https://opalyachts-backend.onrender.com'
 ]
 
 CORS_ALLOW_ALL_ORIGINS=True
