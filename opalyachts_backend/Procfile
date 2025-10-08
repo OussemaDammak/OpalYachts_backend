@@ -1,1 +1,1 @@
-web: gunicorn openyachts_backend.wsgi
+web: gunicorn opalyachts_backend.wsgi
