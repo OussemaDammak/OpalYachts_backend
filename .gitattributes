@@ -1,0 +1,5 @@
+static/* linguist-vendored
+media/* linguist-vendored
+assets/* linguist-vendored
+
+*.py linguist-detectable=true
