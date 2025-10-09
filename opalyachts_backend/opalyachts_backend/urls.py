@@ -10,7 +10,7 @@ from django.http import JsonResponse
 def ping(request):
     return JsonResponse({"status": "ok"})
 urlpatterns = [
-    path('ping',ping),
+    path('ping/',ping),
     path('admin/', admin.site.urls),
     path('api/properties/',include('property.urls')),
     path('api/auth/',include('useraccount.urls')),
