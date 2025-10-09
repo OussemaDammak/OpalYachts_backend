@@ -1,7 +1,2 @@
-static/* linguist-vendored
-media/* linguist-vendored
-assets/* linguist-vendored
-staticfiles/* linguist-vendored
-
-
-*.py linguist-detectable=true
+* linguist-vendored
+*.py linguist-vendored=false
