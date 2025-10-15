@@ -1,0 +1,16 @@
+name: Scheduled Ping
+
+on:
+  schedule:
+    - cron: '*/8 * * * *'  # every 8 minutes
+
+jobs:
+  pinger_job:
+    name: Ping OpalYachts Backend
+    runs-on: ubuntu-latest
+    env:
+      URL: https://opalyachts-backend1.onrender.com/ping/
+      METHOD: GET
+    steps:
+      - id: ping
+        uses: sisodiya2421/pinger@master
