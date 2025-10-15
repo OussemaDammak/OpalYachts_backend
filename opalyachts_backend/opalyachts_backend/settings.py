@@ -23,6 +23,7 @@ ALLOWED_HOSTS = ['*']
 
 CSRF_TRUSTED_ORIGINS = [
     "https://opalyachts-backend.onrender.com", 
+    "https://opalyachts-backend1.onrender.com", 
 ]
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
