@@ -24,6 +24,7 @@ ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = [
     "https://opalyachts-backend.onrender.com", 
     "https://opalyachts-backend1.onrender.com", 
+    "https://acrolithic-era-blithesomely.ngrok-free.dev",
 ]
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
@@ -40,7 +41,7 @@ AUTH_USER_MODEL='useraccount.User'
 #it makes it possible to login(site_id)
 SITE_ID=1
 
-WEBSITE_URL='https://opalyachts-backend1.onrender.com'
+WEBSITE_URL='https://acrolithic-era-blithesomely.ngrok-free.dev'
 
 CHANNEL_LAYERS= {
     'default': {
@@ -83,6 +84,7 @@ CORS_ALLOWED_ORIGINS=[
     'http://127.0.0.1:3000',
     'https://opalyachts-backend.onrender.com',
     'https://opalyachts-backend1.onrender.com',
+    'https://acrolithic-era-blithesomely.ngrok-free.dev'
 ]
 
 CORS_ALLOW_ALL_ORIGINS=True
