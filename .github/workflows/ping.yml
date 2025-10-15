@@ -11,4 +11,4 @@ jobs:
     steps:
       - name: Ping Render app
         run: |
-          curl -I https://opalyachts-backend.onrender.com/ping/ > /dev/null
+          curl -I https://opalyachts-backend1.onrender.com/ping/ > /dev/null
